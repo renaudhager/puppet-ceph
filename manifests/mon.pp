@@ -78,8 +78,7 @@ define ceph::mon (
       $init = 'upstart'
       Service {
         name     => "ceph-mon-${id}",
-        # workaround for bug https://projects.puppetlabs.com/issues/23187
-        provider => 'init',
+        provider => 'upstart',
         start    => "start ceph-mon id=${id}",
         stop     => "stop ceph-mon id=${id}",
         status   => "status ceph-mon id=${id}",
