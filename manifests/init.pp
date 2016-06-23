@@ -67,6 +67,8 @@
 # [*mon_initial_members*] The IDs of initial MONs in the cluster during startup.
 #   Optional. String like e.g. 'a, b, c'.
 #
+# [*mon_initial_members_ensure*] Ensure or not this parameter in conf file.
+#
 # [*mon_host*] The fqdn of MONs in the cluster. They can also be declared
 #   individually through ceph::mon.
 #   Optional. String like e.g. 'a, b, c'.
@@ -112,6 +114,7 @@ class ceph (
   $mon_osd_full_ratio         = undef,
   $mon_osd_nearfull_ratio     = undef,
   $mon_initial_members        = undef,
+  $mon_initial_members_ensure = present,
   $mon_host                   = undef,
   $ms_bind_ipv6               = undef,
   $require_signatures         = undef,
@@ -143,7 +146,9 @@ class ceph (
       'global/osd_pool_default_crush_rule': value => $osd_pool_default_crush_rule;
       'global/mon_osd_full_ratio':          value => $mon_osd_full_ratio;
       'global/mon_osd_nearfull_ratio':      value => $mon_osd_nearfull_ratio;
-      'global/mon_initial_members':         value => $mon_initial_members;
+      'global/mon_initial_members':
+        ensure => $mon_initial_members_ensure,
+        value  => $mon_initial_members ;
       'global/mon_host':                    value => $mon_host;
       'global/ms_bind_ipv6':                value => $ms_bind_ipv6;
       'global/require_signatures':          value => $require_signatures;
